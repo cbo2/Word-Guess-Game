@@ -33,8 +33,8 @@ var phraseList = [
     ["May the Force be with you", "Star Wars - 1977", "Han", "Skywalker", "Lucas"],
     ["E.T. phone home", "E.T.: THE EXTRA-TERRESTRIAL - 1982", "Finger", "Phone", "Elliott"],
     ["Show me the money!", "JERRY MAGUIRE - 1996", "Football", "Cruise", "Cuba"],
-    ["I'll be back", "THE TERMINATOR - 1984", "", "", ""],
-    ["There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "", "", ""]
+    ["I'll be back", "THE TERMINATOR - 1984", "Droid", "Future", "Arnold"],
+    ["There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks"]
 ];
 
 // let's make a random selection for the next phrase
