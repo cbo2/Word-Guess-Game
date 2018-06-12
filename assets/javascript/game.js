@@ -50,15 +50,20 @@ document.querySelector("p.clue3").innerHTML = phraseList[randomIndexToPhrase][4]
 
 // Set the inner HTML contents of the .phrase p to our html string
 // But, first, replace all answered letters with underscores and populate puncuation
-currentPhrase.replace(/[a-z]/g, '_');
-// for (i = 0; i < currentPhrase.length; i++) {
-//     if (currentPhrase.charAt(i) >= 'a' && currentPhrase.charAt(i) <= 'z') {
-//         currentPhrase.charAt(i) = '_';
-//     // whether it is a space or a puncuation, leave it as is and do nothing to expose it
-//     }
-// }
-document.querySelector("p.phrase").innerHTML = currentPhrase;
-
+// One way to replace chars --> currentPhrase = currentPhrase.replace(/[a-zA-Z]/g, '_');
+var codedPhrase = "";
+for (i = 0; i < currentPhrase.length; i++) {
+    if ((currentPhrase.charCodeAt(i) >= 65 && currentPhrase.charCodeAt(i) <= 90) ||
+        (currentPhrase.charCodeAt(i) >= 97 && currentPhrase.charCodeAt(i) <= 122)) {
+            codedPhrase += "_ ";
+    } else if (currentPhrase.charCodeAt(i) == 32) {
+        codedPhrase += "  ";
+    } else {
+    // whether it is a space or a puncuation, leave it as is and do nothing to expose it
+        codedPhrase += currentPhrase.charAt(i) + " ";
+    }
+}
+document.querySelector("p.phrase").innerHTML = codedPhrase;
 
 document.onkeyup = function(event) {
 
