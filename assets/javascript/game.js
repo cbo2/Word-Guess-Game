@@ -1,4 +1,3 @@
-// $(document).ready(function() {
 
     var keysPressedDictionary = { 
         a: false,
@@ -29,6 +28,7 @@
         z: false
     };
 
+    // this is the constructor for my MovieEntry object
     function MovieEntry(phrase, title, clue1, clue2, clue3, soundBiteFile) {
         this.phrase = phrase;
         this.title = title;
@@ -55,12 +55,16 @@
     phraseList.push(oneEntry);
     oneEntry = new MovieEntry("There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks", "assets/audio/league_no_crying.wav");
     phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("That's a fact, Jack!", "Stripes - ", "Murray", "Army", "Horrizontal", "assets/audio/stripes_fact_jack.wav");
+    phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("It's in the hole!", "CaddyShack - ", "Golf", "Murray", "Cinderella story", "assets/audio/in_the_hole.wav");
+    phraseList.push(oneEntry);    
 
     var codedPhrase = "";
     var randomIndexToPhrase = Math.floor(Math.random() * phraseList.length);
     var currentPhrase = "";
     var currentPhraseVisibility = [];
-    var numGuessesWrong = 0;
+    var remainingGuesses = 6;
     var maxGuesses = 7;
     var numWins = 0;
     var numLosses = 0;
@@ -74,7 +78,7 @@
         
         // reset items
         codedPhrase="";
-        numGuessesWrong = 0;
+        remainingGuesses = 6;
         currentPhraseVisibility = [];
         document.querySelector("p.keysGuessed").innerHTML = "";
         document.querySelector("p.phrase").innerHTML = "";
@@ -139,12 +143,14 @@
 
         // after checking all the letters in the phrase, if not found, count it against the userGuess
         if (!goodGuess) {
-            numGuessesWrong++;
+            remainingGuesses--;
+            document.querySelector("a.remainingGuesses").innerHTML = "Remaining guesses: " + remainingGuesses;
         }
-        if (numGuessesWrong >= maxGuesses) {
-            alert("sorry, you lost this round!");
+        if (remainingGuesses == 0) {
             numLosses++;
             document.querySelector("a.losses").innerHTML = "Losses: " + numLosses;
+            alert("sorry, you lost this round!");
+            reset();
         }
         if (showThePhrase()) {
             // if showThePhrase returns true it means the phrase has been solved!
@@ -182,9 +188,9 @@
         }
     };
 
-    document.getElementById("getNextQuote").addEventListener("click", myFunction);
+    document.getElementById("getNextQuote").addEventListener("click", reset);
 
-    function myFunction() {
+    function reset() {
         $('#carouselExampleIndicators').carousel(0);   // reset the carousel to default item
         runOnce();
     }
