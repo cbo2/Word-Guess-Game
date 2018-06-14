@@ -31,12 +31,12 @@
 
     // the phraseList is a tuple of the phrase, the answer, and 3 clues
     var phraseList = [
-        ["Go ahead, make my day", "Sudden Impact - 1983", "Callahan", "Dirty", "Eastwood"],
-        ["May the Force be with you", "Star Wars - 1977", "Han", "Skywalker", "Lucas"],
-        ["E.T. phone home", "E.T.: THE EXTRA-TERRESTRIAL - 1982", "Finger", "Phone", "Elliott"],
-        ["Show me the money!", "JERRY MAGUIRE - 1996", "Football", "Cruise", "Cuba"],
-        ["I'll be back", "THE TERMINATOR - 1984", "Droid", "Future", "Arnold"],
-        ["There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks"]
+        ["Go ahead, make my day", "Sudden Impact - 1983", "Callahan", "Dirty", "Eastwood", "assets/audio/make_my_day.wav"],
+        ["May the Force be with you", "Star Wars - 1977", "Han", "Skywalker", "Lucas", "assets/audio/starwars.mp3"],
+        ["E.T. phone home", "E.T.: THE EXTRA-TERRESTRIAL - 1982", "Finger", "Phone", "Elliott", "assets/audio/et_phone_home.wav"],
+        ["Show me the money!", "JERRY MAGUIRE - 1996", "Football", "Cruise", "Cuba", "assets/audio/money2.mp3"],
+        ["I'll be back", "THE TERMINATOR - 1984", "Droid", "Future", "Arnold", "assets/audio/be_back.wav"],
+        ["There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks", "assets/audio/league_no_crying.wav"]
     ];
 
     var codedPhrase = "";
@@ -47,6 +47,7 @@
     var maxGuesses = 7;
     var numWins = 0;
     var numLosses = 0;
+    var soundBiteFile = "";
 
     function runOnce() {
         for (var key in keysPressedDictionary) {
@@ -82,25 +83,14 @@
         document.querySelector("p.clue2").innerHTML = phraseList[randomIndexToPhrase][3];
         document.querySelector("p.clue3").innerHTML = phraseList[randomIndexToPhrase][4];
 
+        // from the selection, set the sound bite
+        soundBiteFile = phraseList[randomIndexToPhrase][5];
+
         // Set the inner HTML contents of the .phrase p to our html string
         // But, first, replace all answered letters with underscores and populate puncuation
         // One way to replace chars --> currentPhrase = currentPhrase.replace(/[a-zA-Z]/g, '_');
         showThePhrase();
     }    // end runOnce()
-  
-    // function showThePhrase() {
-    //     for (i = 0; i < currentPhrase.length; i++) {
-    //         if ((currentPhrase.charCodeAt(i) >= 65 && currentPhrase.charCodeAt(i) <= 90) ||
-    //             (currentPhrase.charCodeAt(i) >= 97 && currentPhrase.charCodeAt(i) <= 122)) {
-    //                 codedPhrase += "_ ";
-    //         } else if (currentPhrase.charCodeAt(i) == 32) {
-    //             codedPhrase += "  ";
-    //         } else {
-    //         // whether it is a space or a puncuation, leave it as is and do nothing to expose it
-    //             codedPhrase += currentPhrase.charAt(i) + " ";
-    //         }
-    //     }
-    // }
 
     function showThePhrase() {
         var exposedPhrase = "";
@@ -141,9 +131,8 @@
         if (showThePhrase()) {
             // if showThePhrase returns true it means the phrase has been solved!
             numWins++;
-            var audio = new Audio("assets/audio/money2.mp3");
+            var audio = new Audio(soundBiteFile);
             audio.play();
-            alert("solved!!");
             document.querySelector("a.wins").innerHTML = "Wins: " + numWins;
         }
     }
