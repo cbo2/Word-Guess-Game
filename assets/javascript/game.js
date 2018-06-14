@@ -29,15 +29,32 @@
         z: false
     };
 
-    // the phraseList is a tuple of the phrase, the answer, and 3 clues
-    var phraseList = [
-        ["Go ahead, make my day", "Sudden Impact - 1983", "Callahan", "Dirty", "Eastwood", "assets/audio/make_my_day.wav"],
-        ["May the Force be with you", "Star Wars - 1977", "Han", "Skywalker", "Lucas", "assets/audio/starwars.mp3"],
-        ["E.T. phone home", "E.T.: THE EXTRA-TERRESTRIAL - 1982", "Finger", "Phone", "Elliott", "assets/audio/et_phone_home.wav"],
-        ["Show me the money!", "JERRY MAGUIRE - 1996", "Football", "Cruise", "Cuba", "assets/audio/money2.mp3"],
-        ["I'll be back", "THE TERMINATOR - 1984", "Droid", "Future", "Arnold", "assets/audio/be_back.wav"],
-        ["There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks", "assets/audio/league_no_crying.wav"]
-    ];
+    function MovieEntry(phrase, title, clue1, clue2, clue3, soundBiteFile) {
+        this.phrase = phrase;
+        this.title = title;
+        this.clue1 = clue1;
+        this.clue2 = clue2;
+        this.clue3 = clue3;
+        this.soundBiteFile = soundBiteFile; 
+    }
+
+    // the phraseList is a tuple of the phrase, the answer, 3 clues, and an audio file
+    var phraseList = [];
+
+    // initially load movies into the array
+    var oneEntry = Object;
+    oneEntry = new MovieEntry("Go ahead, make my day", "Sudden Impact - 1983", "Callahan", "Dirty", "Eastwood", "assets/audio/make_my_day.wav");
+    phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("May the Force be with you", "Star Wars - 1977", "Han", "Skywalker", "Lucas", "assets/audio/starwars.mp3");
+    phraseList.push(oneEntry);
+    oneEtnry = new MovieEntry("E.T. phone home", "E.T.: THE EXTRA-TERRESTRIAL - 1982", "Finger", "Phone", "Elliott", "assets/audio/et_phone_home.wav");
+    phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("Show me the money!", "JERRY MAGUIRE - 1996", "Football", "Cruise", "Cuba", "assets/audio/money2.mp3");
+    phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("I'll be back", "THE TERMINATOR - 1984", "Droid", "Future", "Arnold", "assets/audio/be_back.wav");
+    phraseList.push(oneEntry);
+    oneEntry = new MovieEntry("There's no crying in baseball!", "A LEAGUE OF THEIR OWN - 1992", "Ladies", "Softball", "Hanks", "assets/audio/league_no_crying.wav");
+    phraseList.push(oneEntry);
 
     var codedPhrase = "";
     var randomIndexToPhrase = Math.floor(Math.random() * phraseList.length);
@@ -65,7 +82,8 @@
         // let's make a random selection for the next phrase
         randomIndexToPhrase = Math.floor(Math.random() * phraseList.length);
         var currentPhraseAnswer = "";
-        currentPhrase = currentPhraseAnswer = phraseList[randomIndexToPhrase][0];
+        oneEntry = phraseList[randomIndexToPhrase];
+        currentPhrase = currentPhraseAnswer = oneEntry.phrase;
 
         for (i = 0; i < currentPhrase.length; i++) {
             var codedChar = [currentPhrase[i], false];
@@ -79,12 +97,12 @@
         }
 
         // from that selection, get the 3 clues and set them on the carrousel
-        document.querySelector("p.clue1").innerHTML = phraseList[randomIndexToPhrase][2];
-        document.querySelector("p.clue2").innerHTML = phraseList[randomIndexToPhrase][3];
-        document.querySelector("p.clue3").innerHTML = phraseList[randomIndexToPhrase][4];
+        document.querySelector("p.clue1").innerHTML = oneEntry.clue1;
+        document.querySelector("p.clue2").innerHTML = oneEntry.clue2;
+        document.querySelector("p.clue3").innerHTML = oneEntry.clue3;
 
         // from the selection, set the sound bite
-        soundBiteFile = phraseList[randomIndexToPhrase][5];
+        soundBiteFile = oneEntry.soundBiteFile;
 
         // Set the inner HTML contents of the .phrase p to our html string
         // But, first, replace all answered letters with underscores and populate puncuation
